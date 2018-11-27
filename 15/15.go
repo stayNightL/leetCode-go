@@ -21,14 +21,14 @@ type TreeNode struct {
 	Val       int
 	LeftNode  *TreeNode
 	RightNode *TreeNode
+	Tag       int
 }
 
-//FIXME 递归写错了
 func (node *TreeNode) toString() string {
 	var s string
 
 	if node.LeftNode != nil {
-		s += node.LeftNode.toString() + "<" + strconv.Itoa(node.LeftNode.Val)
+		s = node.LeftNode.toString() + "<" + strconv.Itoa(node.LeftNode.Val) + "<"
 	}
 
 	if node.RightNode != nil {
@@ -36,22 +36,56 @@ func (node *TreeNode) toString() string {
 	}
 	return s
 }
-func (node *TreeNode) add(v int) {
+func (node *TreeNode) nodeString() string {
+	return strconv.Itoa(node.Val)
+}
+
+//TODO 应该为list实现，slice不合适
+func (node *TreeNode) easytravell() []*TreeNode {
+	var t1 = make([]*TreeNode, 1)
+	t1[0] = node
+	if node.LeftNode != nil {
+		t2 := node.LeftNode.easytravell()
+
+		for _, v := range t2 {
+			if v != nil {
+				t1 = append(t1, v)
+			}
+		}
+	}
+
+	if node.RightNode != nil {
+
+		t2 := node.RightNode.easytravell()
+
+		for _, v := range t2 {
+			if v != nil {
+				t1 = append(t1, v)
+			}
+		}
+
+	}
+	return t1
+}
+
+func (node *TreeNode) add(v, i int) {
 	if node.Val <= v {
 		if node.RightNode == nil {
 			node.RightNode = &TreeNode{
 				Val: v,
+				Tag: i,
 			}
 		} else {
-			node.RightNode.add(v)
+			node.RightNode.add(v, i)
 		}
 	} else {
 		if node.LeftNode == nil {
 			node.LeftNode = &TreeNode{
 				Val: v,
+				Tag: i,
 			}
 		} else {
-			node.LeftNode.add(v)
+			node.LeftNode.add(v, i)
 		}
 	}
 }
@@ -61,12 +95,17 @@ func buildTree(nodes []int) *TreeNode {
 	var root = &TreeNode{
 		Val: 0,
 	}
-	for index := range nodes {
-		root.add(nodes[index])
+	for index, value := range nodes {
+		root.add(value, index)
 	}
 	return root
 }
 
 // func threeSum(nums []int) [][]int {
+// 	root := buildTree(nums)
 
 // }
+
+func ts(root *TreeNode, i int) {
+
+}
