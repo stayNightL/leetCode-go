@@ -13,6 +13,10 @@
 */
 package threeSum
 
+import (
+	"strconv"
+)
+
 type TreeNode struct {
 	Val       int
 	LeftNode  *TreeNode
@@ -24,24 +28,16 @@ func (node *TreeNode) toString() string {
 	var s string
 
 	if node.LeftNode != nil {
-		s += node.LeftNode.toString() + "<"
-	} else {
-		return ""
+		s += node.LeftNode.toString() + "<" + strconv.Itoa(node.LeftNode.Val)
 	}
-	if node != nil {
-		s += node.toString() + "<"
-	} else {
-		return ""
-	}
+
 	if node.RightNode != nil {
-		s += node.RightNode.toString() + "<"
-	} else {
-		return ""
+		s += strconv.Itoa(node.RightNode.Val) + "<" + node.RightNode.toString()
 	}
 	return s
 }
 func (node *TreeNode) add(v int) {
-	if node.Val >= v {
+	if node.Val <= v {
 		if node.RightNode == nil {
 			node.RightNode = &TreeNode{
 				Val: v,
@@ -66,7 +62,7 @@ func buildTree(nodes []int) *TreeNode {
 		Val: 0,
 	}
 	for index := range nodes {
-		root.add(index)
+		root.add(nodes[index])
 	}
 	return root
 }
