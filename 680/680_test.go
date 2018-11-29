@@ -17,7 +17,7 @@ func TestValidPalindrome(t *testing.T) {
 		fmt.Print("yes,itis")
 	}
 }
-
+//TEST
 func TestSlice(t *testing.T) {
 	var s = "abc"
 	for i, r := range s {
