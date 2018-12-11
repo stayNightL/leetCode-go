@@ -14,6 +14,7 @@
 package threeSum
 
 import (
+	mylist "container/list"
 	"strconv"
 )
 
@@ -40,29 +41,21 @@ func (node *TreeNode) nodeString() string {
 	return strconv.Itoa(node.Val)
 }
 
-//TODO 应该为list实现，slice不合适
-func (node *TreeNode) easytravell() []*TreeNode {
-	var t1 = make([]*TreeNode, 1)
-	t1[0] = node
+//FIXME fuck it
+func (node *TreeNode) easytravell() *mylist.List {
+	var t1 = mylist.New()
+	t1.PushFront(node)
 	if node.LeftNode != nil {
 		t2 := node.LeftNode.easytravell()
 
-		for _, v := range t2 {
-			if v != nil {
-				t1 = append(t1, v)
-			}
-		}
+		t1.PushBackList(t2)
 	}
 
 	if node.RightNode != nil {
 
 		t2 := node.RightNode.easytravell()
 
-		for _, v := range t2 {
-			if v != nil {
-				t1 = append(t1, v)
-			}
-		}
+		t1.PushBackList(t2)
 
 	}
 	return t1
