@@ -21,7 +21,6 @@ type ListNode struct {
 	Next *ListNode
 }
 
-//TODO 未测试
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	Fnode := &ListNode{
 		Val:  0,
@@ -34,7 +33,7 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	}
 	for {
 		if frist == nil {
-			second = second.Next.Next
+			second.Next = second.Next.Next
 			break
 		}
 		frist = frist.Next
