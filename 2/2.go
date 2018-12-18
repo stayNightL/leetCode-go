@@ -14,12 +14,13 @@
 
 package addTwoNumbers
 
+import "fmt"
+
 type ListNode struct {
 	Val  int
 	Next *ListNode
 }
 
-//TODO 有问题
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
 	list := &ListNode{
@@ -52,34 +53,28 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		list = list.Next
 	}
 
-	isNeedAdd := false
-	list.Next = &ListNode{
-		Val:  0,
-		Next: nil,
-	}
 	node := head
-	p := head
+
 	for {
-
-		if isNeedAdd {
-			node.Val = head.Val + 1
-
-		}
 		if node.Val >= 10 {
-			isNeedAdd = true
 			node.Val = node.Val - 10
-		} else {
-			isNeedAdd = false
-		}
-		if node.Next == nil {
+			if node.Next != nil {
+				node.Next.Val = node.Next.Val + 1
+			} else {
+				node.Next = &ListNode{
+					Val:  1,
+					Next: nil,
+				}
+				break
+			}
 
+		}
+		fmt.Printf("%d", node.Val)
+		node = node.Next
+		if node == nil {
 			break
 		}
-		p = node
-		node = node.Next
 	}
-	if node.Val == 0 {
-		p.Next = nil
-	}
+
 	return head
 }
