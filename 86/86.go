@@ -1,12 +1,10 @@
 package partition
 
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
 func partition(head *ListNode, x int) *ListNode {
 
 	right := &ListNode{
